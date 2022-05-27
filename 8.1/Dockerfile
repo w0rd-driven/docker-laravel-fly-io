@@ -68,10 +68,22 @@ RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.1
 RUN groupadd --force -g $WWWGROUP laravel
 RUN useradd -ms /bin/bash --no-user-group -g $WWWGROUP -u 1337 laravel
 
+# Setup container entrypoint
 COPY start-container /usr/local/bin/start-container
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY php.ini /etc/php/8.1/cli/conf.d/99-laravel.ini
 RUN chmod +x /usr/local/bin/start-container
+
+# Setup Supervisor
+COPY etc/supervisor/conf.d/docker.conf /etc/supervisor/conf.d/docker.conf
+# COPY etc/supervisor/conf.d/laravel-horizon.conf /etc/supervisor/conf.d/laravel-horizon.conf
+# COPY etc/supervisor/conf.d/laravel-notifications.conf /etc/supervisor/conf.d/laravel-notifications.conf
+# COPY etc/supervisor/conf.d/laravel-queue.conf /etc/supervisor/conf.d/laravel-queue.conf
+# COPY etc/supervisor/conf.d/laravel-schedule.conf /etc/supervisor/conf.d/laravel-schedule.conf
+COPY etc/supervisor/conf.d/nginx.conf /etc/supervisor/conf.d/nginx.conf
+COPY etc/supervisor/conf.d/php-fpm.conf /etc/supervisor/conf.d/php-fpm.conf
+COPY etc/supervisor/conf.d/group.conf /etc/supervisor/conf.d/group.conf
+
+# Setup PHP
+COPY php.ini /etc/php/8.1/cli/conf.d/99-laravel.ini
 
 # Setup Nginx
 # RUN cp /etc/nginx/nginx.conf /etc/nginx/nginx.old.conf && cp /etc/nginx/http.d/default.conf /etc/nginx/http.d/default.old.conf
