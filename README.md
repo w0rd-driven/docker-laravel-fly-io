@@ -1,14 +1,10 @@
 # Docker for Laravel on Fly.io
 
-Docker image build for use with Laravel 9.x applications on Fly.io.
+Docker image build for use with Laravel 9.x applications on Fly.io. The primary goals are to both be a jumping off point for down-level images
+as well as an example.
 
-Based on [docker-laravel-deployer](https://github.com/w0rd-driven/docker-laravel-deployer) which is itself
-based on work from [Ian Olson](https://gist.github.com/iolson), specifically
-[https://gist.github.com/iolson/791fb1c1d1a8cfb5ffa7](https://gist.github.com/iolson/791fb1c1d1a8cfb5ffa7) and
-[https://gist.github.com/iolson/5e3695bc5c9f7afafeb3](https://gist.github.com/iolson/5e3695bc5c9f7afafeb3) as well as
-[The Laravel 5.1 Starter](https://gitlab.com/nasirkhan/laravel-5-starter/blob/master/.gitlab-ci.yml).
-
-For extra support for things like Nginx or Node, [Laravel Sail](https://github.com/laravel/sail) has useful examples in the `/runtimes` directory.
+This image utilizes [Laravel Sail](https://github.com/laravel/sail) as a baseline, most notably as a mirror of the `/runtimes` directory.
+We're also taking plenty of guidance from [Greg Sanderson's Fly Hello Laravel example](https://github.com/gregmsanderson/fly-hello-laravel).
 
 As a general rule to speed up deploying applications, it seems better to bake in any OS level `apt` or `composer` package, within reason.
 The largest bottleneck tends to be the network it runs on. Digital Ocean has a local cache of package managers but I'm not sure if Fly.io does.
